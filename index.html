@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Page Title</title>
+        <script src = "snake.js" type ="text/javascript"></script>
+        <link rel="stylesheet" href="style.css" />
+    </head>
+    <body>
+        <div id="snakeGame">
+            <h1 id="gameOver"></h1>
+            <canvas id="myCanvas"></canvas>
+        </div>
+
+    </body>
+</html>
+
+<script>
+    createCanvas();
+    var gameIsRunning = true;
+    var snake = new Snake(document.getElementById("myCanvas"));
+    var lastUpdate = Date.now();
+    animate();
+
+    function animate(){
+
+        var dt = Date.now() - lastUpdate;
+        lastUpdate = Date.now();
+        var ratio = dt/1000;
+
+        createCanvas();
+
+        snake.update(ratio);
+        snake.show("Green");
+
+        if (gameIsRunning){
+            requestAnimationFrame(animate);
+        }
+        else{
+            snake.show("Red");
+            document.getElementById("gameOver").innerHTML = "Game Over!";
+        }
+    }
+
+    function createCanvas(){
+        myCanvas.width = "600";
+        myCanvas.height = "600";
+        myCanvas.style.backgroundColor = "#000000"
+    }
+</script>

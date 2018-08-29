@@ -1,0 +1,17 @@
+#snakeGame{
+    height: 600px;
+    width: 600px;
+}
+
+#gameOver{
+    font-size: 50px;
+    color: White;
+    position: absolute;
+    text-align: center;
+    z-index: 2;
+}
+
+#myCanvas{
+    position: absolute;
+     z-index: 1;
+}
