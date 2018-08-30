@@ -1,26 +1,27 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Page Title</title>
+        <title>Snake Game</title>
         <script src = "snake.js" type ="text/javascript"></script>
+        <script src = "apple.js" type ="text/javascript"></script>
         <link rel="stylesheet" href="style.css" />
     </head>
     <body>
-
         <canvas id="myCanvas"></canvas>
-
     </body>
 </html>
 
 <script>
     createCanvas();
     var gameIsRunning = true;
+    //var snakeLong = [];
     var snake = new Snake(document.getElementById("myCanvas"));
+    var apple = new Apple(document.getElementById("myCanvas"));
+    //snakeLong.push(new Snake(document.getElementById("myCanvas")));
     var lastUpdate = Date.now();
     animate();
 
     function animate(){
-
         var dt = Date.now() - lastUpdate;
         lastUpdate = Date.now();
         var ratio = dt/1000;
@@ -29,17 +30,13 @@
 
         snake.update(ratio);
         snake.show("Green");
+        apple.show();
 
         if (gameIsRunning){
             requestAnimationFrame(animate);
         }
         else{
-            snake.show("Red");
-            var canvas = document.getElementById("myCanvas");
-            var ctx = canvas.getContext("2d");
-            ctx.font = "30px Arial";
-            ctx.textAlign = "center";
-            ctx.fillText("Game Over !",myCanvas.height/2,myCanvas.width/2);
+            gameOver()
         }
     }
 
@@ -47,5 +44,14 @@
         myCanvas.width = "600";
         myCanvas.height = "600";
         myCanvas.style.backgroundColor = "#000000"
+    }
+
+    function gameOver(){
+        snake.show("Red");
+        var canvas = document.getElementById("myCanvas");
+        var ctx = canvas.getContext("2d");
+        ctx.font = "30px Arial";
+        ctx.textAlign = "center";
+        ctx.fillText("Game Over !",myCanvas.height/2,myCanvas.width/2);
     }
 </script>
