@@ -6,10 +6,8 @@
         <link rel="stylesheet" href="style.css" />
     </head>
     <body>
-        <div id="snakeGame">
-            <h1 id="gameOver"></h1>
-            <canvas id="myCanvas"></canvas>
-        </div>
+
+        <canvas id="myCanvas"></canvas>
 
     </body>
 </html>
@@ -37,7 +35,11 @@
         }
         else{
             snake.show("Red");
-            document.getElementById("gameOver").innerHTML = "Game Over!";
+            var canvas = document.getElementById("myCanvas");
+            var ctx = canvas.getContext("2d");
+            ctx.font = "30px Arial";
+            ctx.textAlign = "center";
+            ctx.fillText("Game Over !",myCanvas.height/2,myCanvas.width/2);
         }
     }
 
