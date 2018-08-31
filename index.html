@@ -14,23 +14,21 @@
 <script>
     createCanvas();
     var gameIsRunning = true;
-    //var snakeLong = [];
     var snake = new Snake(document.getElementById("myCanvas"));
     var apple = new Apple(document.getElementById("myCanvas"));
-    //snakeLong.push(new Snake(document.getElementById("myCanvas")));
     var lastUpdate = Date.now();
     animate();
 
     function animate(){
         var dt = Date.now() - lastUpdate;
         lastUpdate = Date.now();
-        var ratio = dt/1000;
+        //var ratio = dt/1000;
 
         createCanvas();
 
-        snake.update(ratio);
-        snake.show("Green");
         apple.show();
+        snake.update(dt);
+        snake.show("Green");
 
         if (gameIsRunning){
             requestAnimationFrame(animate);
@@ -39,7 +37,7 @@
             gameOver()
         }
     }
-    
+
     function createCanvas(){
         myCanvas.width = "600";
         myCanvas.height = "600";

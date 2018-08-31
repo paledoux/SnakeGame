@@ -1,43 +1,61 @@
 function Snake(myCanvas){
 
-    this.y = myCanvas.height/2;
-    this.x = myCanvas.width/2;
-    this.speed = 1;
-    this.scl =20;
-    var oldY = this.y;
+    var snakePosition = [{
+        x:myCanvas.width/2,
+        y:myCanvas.height/2
+    }]
+    var headDirection = {
+        x:0,
+        y:0
+    }
+    var snakeSize = 20;
+    var snakeDt = 0;
+    var snakeDtMax =100;
+    var head = [];
+    var score = 0;
     directionInitial();
 
     this.show = function(color){
-        if(this.y <= oldY + this.scl){
-            var ctx=myCanvas.getContext("2d");
-            ctx.beginPath();
-            ctx.rect(this.x,this.y,this.scl,this.scl);
-            ctx.fillStyle = color;
-            ctx.fill();
-            oldY = this.y;
-        }
+        var ctx=myCanvas.getContext("2d");
+        ctx.beginPath();
+        ctx.rect(head.x,head.y,snakeSize,snakeSize);
+        ctx.fillStyle = color;
+        ctx.fill();
     }
 
-    this.update = function(ratio){
-        //console.log(this.y);
-        this.y = this.y + this.speed * valueY * ratio;
-        this.x = this.x + this.speed * valueX * ratio;
-        console.log(oldY,this.y,this.x);
+    this.update = function(dt){
+        head = snakePosition[snakePosition.length - 1];
+        snakeDt += dt;
+        console.log(snakeDt,snakeDtMax);
+        while (snakeDt >= snakeDtMax){
+            //snakeDt -= dt;
+            head = {
+                x:head.x + snakeSize * headDirection.x,
+                y:head.y + snakeSize * headDirection.y
+            };
+            snakePosition.push(head);
+        }
 
-        this.collisionMur();
+        collisionMur();
+
+
+        while (snakePosition.length > score + 1){
+            snakePosition.shift();
+        }
+
     }
 
-    this.collisionMur = function(){
-        if (this.y > myCanvas.height-19){
+    function collisionMur(){
+        if (head.y > myCanvas.height-snakeSize + 1){
             gameIsRunning = false;
         }
-        if (this.y < -1){
+        if (head.y < -1){
             gameIsRunning = false;
         }
-        if (this.x > myCanvas.width -19){
+        if (head.x > myCanvas.width -snakeSize + 1){
             gameIsRunning = false;
         }
-        if (this.x < -1){
+        if (head.x < -1){
             gameIsRunning = false;
         }
     }
@@ -46,20 +64,20 @@ function Snake(myCanvas){
        var direction = Math.floor((Math.random() * 4) + 1);
         switch(direction){
             case 1: //Gauche
-                valueY = 0;
-                valueX = -1;
+                headDirection.y = 0;
+                headDirection.x = -1;
                 break;
             case 2: //Haut
-                valueY = -1;
-                valueX = 0;
+                headDirection.y = -1;
+                headDirection.x = 0;
                 break;
             case 3: //Droite
-                valueY = 0;
-                valueX = 1;
+                headDirection.y = 0;
+                headDirection.x = 1;
                 break;
             case 4: //Bas
-                valueY = 1;
-                valueX = 0;
+                headDirection.y = 1;
+                headDirection.x = 0;
                 break;
         }
     }
@@ -68,23 +86,23 @@ function Snake(myCanvas){
         switch (event.key) {
             case 'ArrowLeft':
             case 'Left':
-                valueX = -1;
-                valueY = 0;
+                headDirection.x = -1;
+                headDirection.y = 0;
                 break;
             case 'ArrowRight':
             case 'Right':
-                valueX = 1;
-                valueY = 0;
+                headDirection.x = 1;
+                headDirection.y = 0;
                 break;
             case 'ArrowDown':
             case 'Down':
-                valueX = 0;
-                valueY = 1;
+                headDirection.x = 0;
+                headDirection.y = 1;
                 break;
             case 'ArrowUp':
             case 'Up':
-                valueX = 0;
-                valueY = -1;
+                headDirection.x = 0;
+                headDirection.y = -1;
                 break;
         }
     });
