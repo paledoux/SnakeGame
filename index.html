@@ -17,24 +17,36 @@
     var snake = new Snake(document.getElementById("myCanvas"));
     var apple = new Apple(document.getElementById("myCanvas"));
     var lastUpdate = Date.now();
-    animate();
+    var fps, elapsed, fpsInterval, then, startTime;
+
+    //animate();
+    startAnimating(10);
+
+    function startAnimating(fps) {
+        fpsInterval = 1000 / fps;
+        then = Date.now();
+        startTime = then;
+        animate();
+    }
 
     function animate(){
-        var dt = Date.now() - lastUpdate;
-        lastUpdate = Date.now();
-        //var ratio = dt/1000;
-
         createCanvas();
 
         apple.show();
-        snake.update(dt);
+        now = Date.now();
+        elapsed = now - then;
+
+        if (elapsed > fpsInterval) {
+            then = now - (elapsed % fpsInterval);
+            snake.update();
+        }
         snake.show("Green");
 
         if (gameIsRunning){
             requestAnimationFrame(animate);
         }
         else{
-            gameOver()
+            gameOver();
         }
     }
 
@@ -45,11 +57,12 @@
     }
 
     function gameOver(){
-        snake.show("Red");
         var canvas = document.getElementById("myCanvas");
         var ctx = canvas.getContext("2d");
         ctx.font = "30px Arial";
         ctx.textAlign = "center";
+        ctx.fillStyle = "Red";
         ctx.fillText("Game Over !",myCanvas.height/2,myCanvas.width/2);
+        snake.show("Red");
     }
 </script>
