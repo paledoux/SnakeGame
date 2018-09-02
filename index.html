@@ -32,7 +32,8 @@
     function animate(){
         createCanvas();
 
-        apple.show();
+        var positionApple = apple.show(positionApple);
+
         now = Date.now();
         elapsed = now - then;
 
@@ -41,6 +42,7 @@
             snake.update();
         }
         snake.show("Green");
+        snake.collisionApple(positionApple);
 
         if (gameIsRunning){
             requestAnimationFrame(animate);

@@ -1,4 +1,5 @@
 function Snake(myCanvas){
+    //var apple = new Apple(myCanvas);
 
     var snakePosition = [{
         x:myCanvas.width/2,
@@ -16,10 +17,9 @@ function Snake(myCanvas){
     this.show = function(color){
         var ctx=myCanvas.getContext("2d");
         ctx.beginPath();
-        console.log(head.x,head.y);
         ctx.rect(head.x,head.y,snakeSize,snakeSize);
         ctx.fillStyle = color;
-        ctx.fill();
+        ctx.fill();   
     }
 
     this.update = function(){
@@ -29,9 +29,17 @@ function Snake(myCanvas){
             y:head.y + snakeSize * headDirection.y
         };
         snakePosition.push(head);
+        //var positionApple = apple.show();
         //console.log(head);
         collisionMur();
 
+    }
+
+    this.collisionApple = function(positionApple){
+       if (head.x == positionApple.x && head.y == positionApple.y){
+           alert("LOL");
+           var apple = new Apple(myCanvas);
+       }
     }
 
     function collisionMur(){
