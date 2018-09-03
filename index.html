@@ -18,21 +18,21 @@
     var apple = new Apple(document.getElementById("myCanvas"));
     var lastUpdate = Date.now();
     var fps, elapsed, fpsInterval, then, startTime;
-
-    //animate();
+    var positionApple;
     startAnimating(10);
 
     function startAnimating(fps) {
         fpsInterval = 1000 / fps;
         then = Date.now();
         startTime = then;
+        positionApple = apple.randomApple();
         animate();
     }
 
     function animate(){
         createCanvas();
-
-        var positionApple = apple.show(positionApple);
+          
+        apple.show(positionApple);
 
         now = Date.now();
         elapsed = now - then;
@@ -42,8 +42,9 @@
             snake.update();
         }
         snake.show("Green");
-        snake.collisionApple(positionApple);
 
+        positionApple = snake.collisionApple(positionApple);
+        
         if (gameIsRunning){
             requestAnimationFrame(animate);
         }
@@ -55,7 +56,7 @@
     function createCanvas(){
         myCanvas.width = "600";
         myCanvas.height = "600";
-        myCanvas.style.backgroundColor = "#000000"
+        myCanvas.style.backgroundColor = "#000000";
     }
 
     function gameOver(){

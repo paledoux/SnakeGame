@@ -1,5 +1,4 @@
 function Snake(myCanvas){
-    //var apple = new Apple(myCanvas);
 
     var snakePosition = [{
         x:myCanvas.width/2,
@@ -11,6 +10,7 @@ function Snake(myCanvas){
     }
     var snakeSize = 20;
     var head = [];
+    
 
     directionInitial();
 
@@ -29,17 +29,27 @@ function Snake(myCanvas){
             y:head.y + snakeSize * headDirection.y
         };
         snakePosition.push(head);
-        //var positionApple = apple.show();
-        //console.log(head);
         collisionMur();
-
     }
 
     this.collisionApple = function(positionApple){
        if (head.x == positionApple.x && head.y == positionApple.y){
-           alert("LOL");
+           //alert("LOL");
            var apple = new Apple(myCanvas);
+           positionApple = apple.randomApple();
+           head = snakePosition[snakePosition.length];    
+           head = {
+               x:head.x + snakeSize + snakeSize * headDirection.x,
+               y:head.y + snakeSize + snakeSize * headDirection.y
+           };
+           snakePosition.push(head);
+           console.log(head);
+           return positionApple;
        }
+       else{
+        return positionApple;
+       }
+       
     }
 
     function collisionMur(){
