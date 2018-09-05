@@ -58,13 +58,12 @@ function Snake(myCanvas){
     }
 
     this.collisionSnake = function(){
-        for (i = snakePosition.length-2; i > 0; i--) {
-            this.test = snakePosition[i];
-            console.log(this.test, this.head);
-            if (this.test == this.head){
-                alert("rip");
+        var tail = snakePosition.slice(0,-1);
+        tail.forEach(pos => {
+            if (pos.x == this.head.x && pos.y == this.head.y){
+                gameIsRunning = false;
             }
-        }
+        });
     }
 
     this.collisionMur = function(){
