@@ -10,13 +10,18 @@ function Snake(myCanvas){
     };
     var snakeSize = 20;
     this.head = [];
+    this.snakeLength = 1;
 
     this.directionInitial();
 
     this.show = function(color){
         var ctx=myCanvas.getContext("2d");
         ctx.beginPath();
-        ctx.rect(this.head.x,this.head.y,snakeSize,snakeSize);
+        for (i = 0; i < snakePosition.length; i++) {
+            this.head = snakePosition[i];
+            ctx.rect(this.head.x,this.head.y,snakeSize,snakeSize);
+        }
+        //ctx.rect(this.head.x,this.head.y,snakeSize,snakeSize);
         ctx.fillStyle = color;
         ctx.fill();
     }
@@ -28,27 +33,38 @@ function Snake(myCanvas){
             y:this.head.y + snakeSize * this.headDirection.y
         };
         snakePosition.push(this.head);
+        while (snakePosition.length > this.snakeLength){
+            snakePosition.shift();
+        }
         this.collisionMur();
+        this.collisionSnake();
     }
 
     this.collisionApple = function(positionApple){
        if (this.head.x == positionApple.x && this.head.y == positionApple.y){
-           //alert("LOL");
            var apple = new Apple(myCanvas);
            positionApple = apple.randomApple();
-           this.head = snakePosition[snakePosition.length];
+           this.snakeLength++;
            this.head = {
-               x:this.head.x + snakeSize + snakeSize * this.headDirection.x,
-               y:this.head.y + snakeSize + snakeSize * this.headDirection.y
+               x:this.head.x + snakeSize * this.headDirection.x,
+               y:this.head.y + snakeSize * this.headDirection.y
            };
            snakePosition.push(this.head);
-           console.log(this.head);
            return positionApple;
        }
        else{
         return positionApple;
        }
+    }
 
+    this.collisionSnake = function(){
+        for (i = snakePosition.length-2; i > 0; i--) {
+            this.test = snakePosition[i];
+            console.log(this.test, this.head);
+            if (this.test == this.head){
+                alert("rip");
+            }
+        }
     }
 
     this.collisionMur = function(){
@@ -78,7 +94,34 @@ function Snake(myCanvas){
         }
     }
 
-    this.directionInitial = function(){
+
+    document.addEventListener('keydown', (event) => {
+        switch (event.key) {
+            case 'ArrowLeft':
+            case 'Left':
+                this.headDirection.x = -1;
+                this.headDirection.y = 0;
+                break;
+            case 'ArrowRight':
+            case 'Right':
+                this.headDirection.x = 1;
+                this.headDirection.y = 0;
+                break;
+            case 'ArrowDown':
+            case 'Down':
+                this.headDirection.x = 0;
+                this.headDirection.y = 1;
+                break;
+            case 'ArrowUp':
+            case 'Up':
+                this.headDirection.x = 0;
+                this.headDirection.y = -1;
+                break;
+        }
+    });
+}
+
+Snake.prototype.directionInitial = function(){
        var direction = Math.floor((Math.random() * 4) + 1);
         switch(direction){
             case 1: //Gauche
@@ -108,28 +151,3 @@ function Snake(myCanvas){
         }
     }
 
-    document.addEventListener('keydown', (event) => {
-        switch (event.key) {
-            case 'ArrowLeft':
-            case 'Left':
-                this.headDirection.x = -1;
-                this.headDirection.y = 0;
-                break;
-            case 'ArrowRight':
-            case 'Right':
-                this.headDirection.x = 1;
-                this.headDirection.y = 0;
-                break;
-            case 'ArrowDown':
-            case 'Down':
-                this.headDirection.x = 0;
-                this.headDirection.y = 1;
-                break;
-            case 'ArrowUp':
-            case 'Up':
-                this.headDirection.x = 0;
-                this.headDirection.y = -1;
-                break;
-        }
-    });
-}
