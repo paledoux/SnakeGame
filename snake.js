@@ -21,7 +21,6 @@ function Snake(myCanvas){
             this.head = snakePosition[i];
             ctx.rect(this.head.x,this.head.y,snakeSize,snakeSize);
         }
-        //ctx.rect(this.head.x,this.head.y,snakeSize,snakeSize);
         ctx.fillStyle = color;
         ctx.fill();
     }
@@ -53,7 +52,7 @@ function Snake(myCanvas){
            return positionApple;
        }
        else{
-        return positionApple;
+            return positionApple;
        }
     }
 

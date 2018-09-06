@@ -7,6 +7,7 @@
         <link rel="stylesheet" href="style.css" />
     </head>
     <body>
+        <h1 id = "gameScore">Score : </h1>
         <canvas id="myCanvas"></canvas>
     </body>
 </html>
@@ -30,8 +31,10 @@
     }
 
     function animate(){
+        document.getElementById("gameScore").innerHTML = "Score : " + (snake.snakeLength -1);
+
         createCanvas();
-          
+
         apple.show(positionApple);
 
         now = Date.now();
@@ -44,7 +47,7 @@
         snake.show("Green");
 
         positionApple = snake.collisionApple(positionApple);
-        
+
         if (gameIsRunning){
             requestAnimationFrame(animate);
         }
