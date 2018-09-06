@@ -1,0 +1,21 @@
+.container{
+    background-color:#909095;
+    min-width:604px;
+    width: 80%;
+    margin: auto;
+    text-align: center;
+}
+
+.game{
+    display: inline-block;
+    border-style: solid;
+    border-color: red;
+    background-color: white;
+
+}
+.game h1{
+    margin: 0;
+    text-align: center;
+}
+
+

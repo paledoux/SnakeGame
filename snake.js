@@ -11,7 +11,6 @@ function Snake(myCanvas){
     var snakeSize = 20;
     this.head = [];
     this.snakeLength = 1;
-
     this.directionInitial();
 
     this.show = function(color){
@@ -36,23 +35,19 @@ function Snake(myCanvas){
             snakePosition.shift();
         }
         this.collisionMur();
+        this.collisionApple();
         this.collisionSnake();
     }
 
-    this.collisionApple = function(positionApple){
-       if (this.head.x == positionApple.x && this.head.y == positionApple.y){
-           var apple = new Apple(myCanvas);
-           positionApple = apple.randomApple();
+    this.collisionApple = function(){
+       if (this.head.x == apple.applePosition.x && this.head.y == apple.applePosition.y){
+           apple.randomApple();
            this.snakeLength++;
            this.head = {
                x:this.head.x + snakeSize * this.headDirection.x,
                y:this.head.y + snakeSize * this.headDirection.y
            };
            snakePosition.push(this.head);
-           return positionApple;
-       }
-       else{
-            return positionApple;
        }
     }
 
@@ -91,32 +86,6 @@ function Snake(myCanvas){
             };
         }
     }
-
-
-    document.addEventListener('keydown', (event) => {
-        switch (event.key) {
-            case 'ArrowLeft':
-            case 'Left':
-                this.headDirection.x = -1;
-                this.headDirection.y = 0;
-                break;
-            case 'ArrowRight':
-            case 'Right':
-                this.headDirection.x = 1;
-                this.headDirection.y = 0;
-                break;
-            case 'ArrowDown':
-            case 'Down':
-                this.headDirection.x = 0;
-                this.headDirection.y = 1;
-                break;
-            case 'ArrowUp':
-            case 'Up':
-                this.headDirection.x = 0;
-                this.headDirection.y = -1;
-                break;
-        }
-    });
 }
 
 Snake.prototype.directionInitial = function(){
@@ -148,4 +117,3 @@ Snake.prototype.directionInitial = function(){
                 break;
         }
     }
-
